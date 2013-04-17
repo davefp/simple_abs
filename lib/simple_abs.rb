@@ -16,7 +16,7 @@ module SimpleAbs
   def ab_test(name, tests)
     
     if is_bot?
-      test_value = tests[rand(tests.size)]
+      test_value = tests.sample
       return test_value
     end
     
@@ -27,7 +27,7 @@ module SimpleAbs
     test_value = cookies[name]
     
     if test_value.blank? || !tests.include?(test_value)
-      test_value = tests[rand(tests.size)]
+      test_value = tests.sample
       cookies.permanent[name] = test_value
       
       Alternative.find_or_create_by_experiment_and_which(name, test_value).increment!(:participants)
